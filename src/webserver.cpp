@@ -17,8 +17,7 @@ WiFiServer server(80);
 String header;
 
 // Auxiliar variables to store the current output state
-String output26State = "off";
-String output27State = "off";
+String led1 = "off";
 
 // Assign output variables to GPIO pins
 const int ledpin = 14;
@@ -68,11 +67,11 @@ void loop(){
             // turns the GPIOs on and off
             if (header.indexOf("GET /26/on") >= 0) {
               Serial.println("GPIO 26 on");
-              output26State = "on";
+              led1 = "on";
               digitalWrite(ledpin, HIGH);
             } else if (header.indexOf("GET /26/off") >= 0) {
               Serial.println("GPIO 26 off");
-              output26State = "off";
+              led1 = "off";
               digitalWrite(ledpin, LOW);
             }
             
@@ -91,9 +90,9 @@ void loop(){
             client.println("<body><h1>ESP32 Web Server</h1>");
             
             // Display current state, and ON/OFF buttons for GPIO 26  
-            client.println("<p>GPIO 26 - State " + output26State + "</p>");
+            client.println("<p>GPIO 26 - State " + led1 + "</p>");
             // If the output26State is off, it displays the ON button       
-            if (output26State=="off") {
+            if (led1=="off") {
               client.println("<p><a href=\"/26/on\"><button class=\"button\">ON</button></a></p>");
             } else {
               client.println("<p><a href=\"/26/off\"><button class=\"button button2\">OFF</button></a></p>");
